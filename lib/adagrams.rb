@@ -51,8 +51,8 @@ def draw_letters
   return your_hand
 end
 
-def uses_available_letters(input, letters_in_hand)
-  input = input.split("")
+def uses_available_letters?(input, letters_in_hand)
+  input = input.upcase.split("")
   check = []
   if input.length > letters_in_hand.length
     return false
@@ -69,10 +69,3 @@ def uses_available_letters(input, letters_in_hand)
     return false
   end
 end
-
-my_hand = draw_letters
-
-puts my_hand
-word = gets.chomp.upcase
-
-puts uses_available_letters(word, my_hand)
