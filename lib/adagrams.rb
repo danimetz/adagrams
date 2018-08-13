@@ -53,19 +53,15 @@ end
 
 def uses_available_letters?(input, letters_in_hand)
   input = input.upcase.split("")
-  check = []
   if input.length > letters_in_hand.length
     return false
   else
     input.each do |letter|
-      if input.count(letter) <= letters_in_hand.count(letter)
-        check << true
+      if input.count(letter) > letters_in_hand.count(letter)
+        return false
+      else
+        return true
       end
     end
-  end
-  if input.length == check.length
-    return true
-  else
-    return false
   end
 end
