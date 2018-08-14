@@ -105,7 +105,38 @@ def highest_score_from words
   words.each do |word|
     scores[word] = score_word(word)
   end
-  puts scores
+
+  max_score = scores.max_by{|key,value| value}[1]
+  max_word = scores.max_by{|key,value| value}[0]
+
+  if scores.values.count(max_score) == 1
+    highest_score[:word] = max_word
+    highest_score[:score] = max_score
+    return highest_score
+  else
+    max_scores = scores.select {|key,value| value==max_score}
+
+    min_length = max_scores.min_by{|key,value| key.length}[0].length
+
+    best_words = max_scores.select {|key,value| key.length == min_length || key.length == 10}
+
+    if best_words.length == 1
+      highest_score[:word] = best_words.keys[0]
+      highest_score[:score] = best_words.values[0]
+      return highest_score
+    elsif best_words.length > 1
+      best_words.each do |word, score|
+        if word.length == 10
+          highest_score[:word] = word
+          highest_score[:score] = score
+          return highest_score
+        end
+      end
+      highest_score[:word] = best_words.keys[0]
+      highest_score[:score] = best_words.values[0]
+      return highest_score
+    end
+  end
 end
 
-highest_score_from ["hello", "dog", "cat"]
+highest_score_from ["aa", "dog", "cat"]
