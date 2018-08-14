@@ -99,6 +99,14 @@ def score_word (word)
   return score
 end
 
+def highest_score (word, score)
+  highest_score = {}
+  highest_score[:word] =  word
+  highest_score[:score] = score
+  return highest_score
+end
+
+
 def highest_score_from words
   highest_score = {}
   scores = {}
@@ -110,9 +118,7 @@ def highest_score_from words
   max_word = scores.max_by{|key,value| value}[0]
 
   if scores.values.count(max_score) == 1
-    highest_score[:word] = max_word
-    highest_score[:score] = max_score
-    return highest_score
+    return highest_score(max_word, max_score)
   else
     max_scores = scores.select {|key,value| value==max_score}
 
@@ -121,20 +127,14 @@ def highest_score_from words
     best_words = max_scores.select {|key,value| key.length == min_length || key.length == 10}
 
     if best_words.length == 1
-      highest_score[:word] = best_words.keys[0]
-      highest_score[:score] = best_words.values[0]
-      return highest_score
+      return highest_score(best_words.keys[0],best_words.values[0])
     elsif best_words.length > 1
       best_words.each do |word, score|
         if word.length == 10
-          highest_score[:word] = word
-          highest_score[:score] = score
-          return highest_score
+          return highest_score(word, score)
         end
       end
-      highest_score[:word] = best_words.keys[0]
-      highest_score[:score] = best_words.values[0]
-      return highest_score
+      return highest_score(best_words.keys[0],best_words.values[0])
     end
   end
 end
