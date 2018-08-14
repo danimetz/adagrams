@@ -1,3 +1,5 @@
+require 'csv'
+
 def draw_letters
   letters = {
     "A" => 9,
@@ -53,15 +55,100 @@ end
 
 def uses_available_letters?(input, letters_in_hand)
   input = input.upcase.split("")
+  value = []
   if input.length > letters_in_hand.length
     return false
   else
     input.each do |letter|
       if input.count(letter) > letters_in_hand.count(letter)
-        return false
+        value << false
       else
-        return true
+        value << true
       end
     end
+  end
+  if value.all? true
+    return true
+  else
+    return false
+  end
+end
+
+def score_word (word)
+  word = word.upcase.split("")
+  score = 0
+  word.each do |letter|
+    case letter
+    when "A", "E", "I", "O", "U", "L", "N", "R", "S", "T"
+      score += 1
+    when "D", "G"
+      score += 2
+    when "B", "C", "M", "P"
+      score += 3
+    when "F", "H", "V", "W", "Y"
+      score += 4
+    when "K"
+      score += 5
+    when "J", "X"
+      score += 8
+    when "Q", "Z"
+      score += 10
+    end
+  end
+
+  score += 8 if word.length >= 7
+
+  return score
+end
+
+def highest_score (word, score)
+  highest_score = {}
+  highest_score[:word] =  word
+  highest_score[:score] = score
+  return highest_score
+end
+
+
+def highest_score_from words
+  scores = {}
+  words.each do |word|
+    scores[word] = score_word(word)
+  end
+
+  max_score = scores.max_by{|key,value| value}[1]
+  max_word = scores.max_by{|key,value| value}[0]
+
+  if scores.values.count(max_score) == 1
+    return highest_score(max_word, max_score)
+  else
+    max_scores = scores.select {|key,value| value==max_score}
+
+    min_length = max_scores.min_by{|key,value| key.length}[0].length
+
+    best_words = max_scores.select {|key,value| key.length == min_length || key.length == 10}
+
+    if best_words.length == 1
+      return highest_score(best_words.keys[0],best_words.values[0])
+    elsif best_words.length > 1
+      best_words.each do |word, score|
+        if word.length == 10
+          return highest_score(word, score)
+        end
+      end
+      return highest_score(best_words.keys[0],best_words.values[0])
+    end
+  end
+end
+
+def is_in_english_dict? (input)
+  dictionary = CSV.read("../assets/dictionary-english.csv")
+  new_dictionary = []
+  dictionary.each do |element|
+    new_dictionary << element[0]
+  end
+  if new_dictionary.include?(input.downcase)
+    return true
+  else
+    return false
   end
 end
