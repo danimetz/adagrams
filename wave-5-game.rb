@@ -1,5 +1,6 @@
 require_relative 'lib/adagrams'
 
+
 def display_welcome_message
   puts "Welcome to Adagrams!"
 end

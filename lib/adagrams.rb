@@ -1,3 +1,5 @@
+require 'csv'
+
 def draw_letters
   letters = {
     "A" => 9,
@@ -135,5 +137,18 @@ def highest_score_from words
       end
       return highest_score(best_words.keys[0],best_words.values[0])
     end
+  end
+end
+
+def is_in_english_dict? (input)
+  dictionary = CSV.read("../assets/dictionary-english.csv")
+  new_dictionary = []
+  dictionary.each do |element|
+    new_dictionary << element[0]
+  end
+  if new_dictionary.include?(input.downcase)
+    return true
+  else
+    return false
   end
 end
