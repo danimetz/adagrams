@@ -53,15 +53,59 @@ end
 
 def uses_available_letters?(input, letters_in_hand)
   input = input.upcase.split("")
+  value = []
   if input.length > letters_in_hand.length
     return false
   else
     input.each do |letter|
       if input.count(letter) > letters_in_hand.count(letter)
-        return false
+        value << false
       else
-        return true
+        value << true
       end
     end
   end
+  if value.all? true
+    return true
+  else
+    return false
+  end
 end
+
+def score_word (word)
+  word = word.upcase.split("")
+  score = 0
+  word.each do |letter|
+    case letter
+    when "A", "E", "I", "O", "U", "L", "N", "R", "S", "T"
+      score += 1
+    when "D", "G"
+      score += 2
+    when "B", "C", "M", "P"
+      score += 3
+    when "F", "H", "V", "W", "Y"
+      score += 4
+    when "K"
+      score += 5
+    when "J", "X"
+      score += 8
+    when "Q", "Z"
+      score += 10
+    end
+  end
+
+  score += 8 if word.length >= 7
+
+  return score
+end
+
+def highest_score_from words
+  highest_score = {}
+  scores = {}
+  words.each do |word|
+    scores[word] = score_word(word)
+  end
+  puts scores
+end
+
+highest_score_from ["hello", "dog", "cat"]
