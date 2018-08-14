@@ -108,7 +108,6 @@ end
 
 
 def highest_score_from words
-  highest_score = {}
   scores = {}
   words.each do |word|
     scores[word] = score_word(word)
@@ -138,5 +137,3 @@ def highest_score_from words
     end
   end
 end
-
-highest_score_from ["aa", "dog", "cat"]
