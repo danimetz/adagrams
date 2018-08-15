@@ -68,11 +68,7 @@ def uses_available_letters?(input, letters_in_hand)
       input.count(letter) > letters_in_hand.count(letter) ? value << false : value << true
     end
   end
-  if value.all? true
-    return true
-  else
-    return false
-  end
+  value.all? true ? true : false
 end
 
 def score_word (word)
