@@ -3,6 +3,7 @@
 
 require 'csv'
 
+#Wave 1
 #Picks 10 letters from the letter pool
 def draw_letters
   letters = {
@@ -57,6 +58,7 @@ def draw_letters
   return your_hand
 end
 
+#Wave 2
 #Checks that the letters for the word you picked are in your hand
 def uses_available_letters?(input, letters_in_hand)
   input = input.upcase.split("")
@@ -71,6 +73,7 @@ def uses_available_letters?(input, letters_in_hand)
   value.all? true ? true : false
 end
 
+#Wave 3
 #Returns score of the word
 def score_word (word)
   word = word.upcase.split("")
@@ -99,6 +102,7 @@ def score_word (word)
   return score
 end
 
+#Wave 4
 #Creates the hash for the winning word
 def highest_score (word, score)
   highest_score = {}
@@ -107,15 +111,17 @@ def highest_score (word, score)
   return highest_score
 end
 
-#Returns the hash of the winning word (:word & :score) and takes into account word length and ties
+#Returns the hash of the winning word (:word & :score) and takes into account word length and ties for an array of words
 def highest_score_from words
   scores = {}
   words.each do |word|
     scores[word] = score_word(word)
   end
 
-  max_score = scores.max_by{|key,value| value}[1]
+  #Determines maximum score for all words
   max_word = scores.max_by{|key,value| value}[0]
+  max_score = scores.max_by{|key,value| value}[1]
+
 
   if scores.values.count(max_score) == 1
     return highest_score(max_word, max_score)
@@ -139,6 +145,7 @@ def highest_score_from words
   end
 end
 
+#Wave 5
 #Checks that the word is in the english dictionary
 def is_in_english_dict? (input)
   dictionary = CSV.read("assets/dictionary-english.csv")
