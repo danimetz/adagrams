@@ -71,6 +71,7 @@ def uses_available_letters?(input, letters_in_hand)
   value.all? true ? true : false
 end
 
+#Returns score of the word
 def score_word (word)
   word = word.upcase.split("")
   score = 0
@@ -98,6 +99,7 @@ def score_word (word)
   return score
 end
 
+#Creates the hash for the winning word
 def highest_score (word, score)
   highest_score = {}
   highest_score[:word] =  word
@@ -105,7 +107,7 @@ def highest_score (word, score)
   return highest_score
 end
 
-
+#Returns the hash of the winning word (:word & :score) and takes into account word length and ties
 def highest_score_from words
   scores = {}
   words.each do |word|
@@ -137,15 +139,12 @@ def highest_score_from words
   end
 end
 
+#Checks that the word is in the english dictionary
 def is_in_english_dict? (input)
   dictionary = CSV.read("assets/dictionary-english.csv")
   new_dictionary = []
   dictionary.each do |element|
     new_dictionary << element[0]
   end
-  if new_dictionary.include?(input.downcase)
-    return true
-  else
-    return false
-  end
+  new_dictionary.include?(input.downcase) ? true : false
 end
