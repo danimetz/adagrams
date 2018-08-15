@@ -141,7 +141,7 @@ def highest_score_from words
 end
 
 def is_in_english_dict? (input)
-  dictionary = CSV.read("../assets/dictionary-english.csv")
+  dictionary = CSV.read("assets/dictionary-english.csv")
   new_dictionary = []
   dictionary.each do |element|
     new_dictionary << element[0]
