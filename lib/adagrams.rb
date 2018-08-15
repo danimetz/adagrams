@@ -1,5 +1,9 @@
+#Adagrams
+#Danielle & Alice
+
 require 'csv'
 
+#Picks 10 letters from the letter pool
 def draw_letters
   letters = {
     "A" => 9,
@@ -39,7 +43,7 @@ def draw_letters
     end
   end
 
-  #Select letters and replace with 0 once they are pulled
+  #Select letters and replace with 0 once they are picked
   your_hand = []
   count = 0
   while count < 10 do
@@ -53,6 +57,7 @@ def draw_letters
   return your_hand
 end
 
+#Checks that the letters for the word you picked are in your hand
 def uses_available_letters?(input, letters_in_hand)
   input = input.upcase.split("")
   value = []
@@ -60,11 +65,7 @@ def uses_available_letters?(input, letters_in_hand)
     return false
   else
     input.each do |letter|
-      if input.count(letter) > letters_in_hand.count(letter)
-        value << false
-      else
-        value << true
-      end
+      input.count(letter) > letters_in_hand.count(letter) ? value << false : value << true
     end
   end
   if value.all? true
